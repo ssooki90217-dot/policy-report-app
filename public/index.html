@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>정책기획보고서 자동 작성 — 추진배경·개선방안·추진계획</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ===== 헤더 ===== -->
+  <header class="app-header">
+    <div class="seal" aria-hidden="true">
+      <svg viewBox="0 0 64 64" width="34" height="34">
+        <circle cx="32" cy="32" r="30" fill="none" stroke="currentColor" stroke-width="2"/>
+        <circle cx="32" cy="32" r="23" fill="none" stroke="currentColor" stroke-width="1"/>
+        <text x="32" y="38" text-anchor="middle" font-size="16" fill="currentColor" font-family="serif">策</text>
+      </svg>
+    </div>
+    <div class="app-header-text">
+      <p class="eyebrow">POLICY REPORT BUILDER</p>
+      <h1>정책기획보고서 자동 작성</h1>
+    </div>
+  </header>
+
+  <!-- ===== 위저드 ===== -->
+  <main id="wizard" class="wizard">
+
+    <div class="progress" id="progress" aria-hidden="true">
+      <span class="progress-dot" data-step="1"></span>
+      <span class="progress-dot" data-step="2"></span>
+      <span class="progress-dot" data-step="3"></span>
+      <span class="progress-dot" data-step="4"></span>
+      <span class="progress-dot" data-step="5"></span>
+    </div>
+
+    <!-- STEP 1 -->
+    <section class="step" data-step="1">
+      <p class="step-label">Q1 · 추진배경 — 목적</p>
+      <h2>당신이 쓸 정책기획보고서의 목표(To-be)는 무엇인가요?</h2>
+      <textarea id="q1" placeholder="예) 신규직원의 조직 적응 기간을 3개월 이내로 단축한다"></textarea>
+      <div class="step-actions">
+        <span></span>
+        <button class="btn primary" data-next>다음</button>
+      </div>
+    </section>
+
+    <!-- STEP 2 -->
+    <section class="step" data-step="2" hidden>
+      <p class="step-label">Q2 · 추진배경 — 필요성</p>
+      <h2>이 목표가 왜 중요한가요?</h2>
+      <p class="hint">지금 하지 않으면 안 되는 이유, 시급성을 적어주세요.</p>
+      <textarea id="q2" placeholder="예) 신규직원 1년차 이탈률이 최근 3년간 지속 상승하고 있음"></textarea>
+      <div class="step-actions">
+        <button class="btn ghost" data-prev>이전</button>
+        <button class="btn primary" data-next>다음</button>
+      </div>
+    </section>
+
+    <!-- STEP 3 -->
+    <section class="step" data-step="3" hidden>
+      <p class="step-label">Q3 · 추진배경 — 현황(결과·상태)</p>
+      <h2>현재 문제와 상태가 무엇인가요?</h2>
+      <p class="hint">지금 어떤 상태·결과인지 적어주세요. 가능하면 수치나 통계를 함께 적어주세요.
+        (예: 최근 3년간 민원 30% 증가) · 통제 불가능한 외부 요인보다, 우리가 개입해 바꿀 수 있는
+        지점 위주로 적어주세요.</p>
+      <textarea id="q3" placeholder="예) 최근 3년간 신입직원 1년차 잔류율이 92%→78%로 하락"></textarea>
+      <div class="step-actions">
+        <button class="btn ghost" data-prev>이전</button>
+        <button class="btn primary" data-next>다음</button>
+      </div>
+    </section>
+
+    <!-- STEP 4 -->
+    <section class="step" data-step="4" hidden>
+      <p class="step-label">Q4 · 추진배경 — 문제점(원인)</p>
+      <h2>이 문제의 원인이 무엇이라고 생각하나요?</h2>
+      <p class="hint">Q3의 상태가 '왜' 그렇게 됐는지 이유를 적어주세요. 데이터/통계로 보이는 원인(분석적)과
+        이해관계자가 느끼는 원인(공감적)을 함께 생각해보면 좋습니다.</p>
+      <textarea id="q4" placeholder="예) 기존 멘토링제가 업무중심적으로만 운영되어 정서적 적응 지원이 부족함"></textarea>
+      <div class="step-actions">
+        <button class="btn ghost" data-prev>이전</button>
+        <button class="btn primary" data-next>다음</button>
+      </div>
+    </section>
+
+    <!-- STEP 5 : 분량 선택 -->
+    <section class="step" data-step="5" hidden>
+      <p class="step-label">Q5 · 보고서 분량</p>
+      <h2>보고서 분량을 선택해주세요</h2>
+      <div class="length-cards">
+        <button class="length-card" data-length="1" data-selected="true">
+          <span class="length-card-title">1장 · 약식</span>
+          <span class="length-card-desc">핵심만 간결하게 — 실무 보고·빠른 검토용</span>
+        </button>
+        <button class="length-card" data-length="2">
+          <span class="length-card-title">2장 · 정식</span>
+          <span class="length-card-desc">배경·원인·방안·계획·기대효과를 충분히 풀어 쓴 상세 보고서</span>
+        </button>
+      </div>
+      <div class="step-actions">
+        <button class="btn ghost" data-prev>이전</button>
+        <button class="btn primary" id="toSummary">입력 확인</button>
+      </div>
+    </section>
+
+    <!-- STEP 6 : 요약 -->
+    <section class="step" data-step="6" hidden>
+      <p class="step-label">입력 요약</p>
+      <h2>이 내용으로 보고서를 생성할까요?</h2>
+      <dl class="summary" id="summary"></dl>
+      <div class="step-actions">
+        <button class="btn ghost" data-prev>이전</button>
+        <button class="btn primary" id="generateBtn">보고서 생성</button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== 로딩 ===== -->
+  <div id="loading" class="loading" hidden>
+    <div class="spinner" aria-hidden="true"></div>
+    <p>추진배경·개선방안·추진계획을 구조화하는 중…</p>
+  </div>
+
+  <!-- ===== 결과 ===== -->
+  <section id="resultView" class="result-view" hidden>
+
+    <div class="result-toolbar">
+      <div class="result-toolbar-left">
+        <span class="badge" id="lengthBadge">1장 · 약식</span>
+      </div>
+      <div class="result-toolbar-right">
+        <button class="btn ghost sm" id="editToggle">✎ 직접 수정</button>
+        <button class="btn ghost sm" id="regenBtn">↻ 재생성</button>
+        <button class="btn primary sm" id="copyBtn">서식 포함 복사</button>
+      </div>
+    </div>
+
+    <div class="paper-wrap">
+      <article class="paper" id="paper">
+        <!-- JS가 채움 -->
+      </article>
+    </div>
+
+    <p class="copy-toast" id="copyToast" hidden>클립보드에 복사되었습니다. 한글(HWP)이나 워드에 붙여넣어보세요.</p>
+
+    <div class="result-footer">
+      <button class="btn ghost" id="startOverBtn">처음부터 다시</button>
+    </div>
+
+  </section>
+
+</div>
+
+<script src="js/app.js"></script>
+</body>
+</html>

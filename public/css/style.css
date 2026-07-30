@@ -1,0 +1,354 @@
+/* ============================================================
+   토큰
+   ============================================================ */
+:root{
+  --navy-900:#132A42;
+  --navy-800:#1B3A5C;
+  --navy-700:#28517C;
+  --navy-100:#E8EEF4;
+  --brass:#B08D57;
+  --brass-light:#E7D8BC;
+  --paper:#FFFFFF;
+  --bg:#F1F3F6;
+  --ink:#1C2126;
+  --ink-soft:#5B6472;
+  --line:#DEE3EA;
+  --danger:#B3492F;
+
+  --font-ui: 'Noto Sans KR', -apple-system, sans-serif;
+
+  /* 3-1 서식 규정 — 정부 표준 보고서 글꼴(행정의품격.hwpx 기준) + 웹 폴백 스택 */
+  --font-title: 'HY헤드라인M', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+  --font-body:  '휴먼명조', 'Noto Serif KR', 'Batang', serif;
+  --font-note:  '중고딕', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+
+  --radius: 10px;
+}
+
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--font-ui);
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+
+.app{
+  max-width:860px;
+  margin:0 auto;
+  padding:32px 20px 80px;
+}
+
+/* ============================================================
+   헤더
+   ============================================================ */
+.app-header{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  margin-bottom:36px;
+}
+.seal{
+  width:52px;height:52px;
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--navy-800);
+  color:var(--brass-light);
+  flex:none;
+}
+.eyebrow{
+  margin:0 0 2px;
+  font-size:11px;
+  letter-spacing:.14em;
+  color:var(--brass);
+  font-weight:700;
+}
+.app-header h1{
+  margin:0;
+  font-size:22px;
+  font-weight:700;
+  color:var(--navy-900);
+}
+
+/* ============================================================
+   위저드
+   ============================================================ */
+.progress{
+  display:flex;
+  gap:8px;
+  margin-bottom:22px;
+}
+.progress-dot{
+  width:28px;height:4px;border-radius:2px;
+  background:var(--line);
+  transition:background .25s ease;
+}
+.progress-dot.active{background:var(--brass);}
+.progress-dot.done{background:var(--navy-700);}
+
+.step{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:32px 30px;
+  box-shadow:0 1px 2px rgba(19,42,66,.04);
+}
+.step-label{
+  margin:0 0 8px;
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.06em;
+  color:var(--navy-700);
+  text-transform:uppercase;
+}
+.step h2{
+  margin:0 0 6px;
+  font-size:20px;
+  line-height:1.4;
+  color:var(--ink);
+}
+.hint{
+  margin:0 0 16px;
+  font-size:13px;
+  color:var(--ink-soft);
+  line-height:1.6;
+}
+textarea{
+  width:100%;
+  min-height:120px;
+  margin-top:10px;
+  padding:14px 16px;
+  border:1px solid var(--line);
+  border-radius:8px;
+  font-family:var(--font-ui);
+  font-size:15px;
+  line-height:1.6;
+  color:var(--ink);
+  resize:vertical;
+  background:#FCFCFD;
+}
+textarea:focus{
+  outline:2px solid var(--brass);
+  outline-offset:1px;
+  border-color:var(--brass);
+}
+
+.step-actions{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:24px;
+}
+
+.btn{
+  appearance:none;
+  border:1px solid transparent;
+  border-radius:8px;
+  padding:11px 22px;
+  font-family:var(--font-ui);
+  font-size:14px;
+  font-weight:600;
+  cursor:pointer;
+  transition:transform .12s ease, background .15s ease, border-color .15s ease;
+}
+.btn:active{transform:translateY(1px);}
+.btn.primary{background:var(--navy-800);color:#fff;}
+.btn.primary:hover{background:var(--navy-900);}
+.btn.ghost{background:transparent;color:var(--navy-800);border-color:var(--line);}
+.btn.ghost:hover{border-color:var(--navy-700);}
+.btn.sm{padding:8px 14px;font-size:13px;}
+.btn:focus-visible{outline:2px solid var(--brass);outline-offset:2px;}
+
+/* 분량 선택 카드 */
+.length-cards{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+  margin-top:8px;
+}
+.length-card{
+  text-align:left;
+  border:1.5px solid var(--line);
+  border-radius:10px;
+  padding:18px 16px;
+  background:#FCFCFD;
+  cursor:pointer;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  font-family:var(--font-ui);
+}
+.length-card-title{font-weight:700;color:var(--navy-900);font-size:15px;}
+.length-card-desc{font-size:12.5px;color:var(--ink-soft);line-height:1.5;}
+.length-card[data-selected="true"]{
+  border-color:var(--brass);
+  background:var(--brass-light);
+  box-shadow:0 0 0 1px var(--brass);
+}
+
+/* 요약 */
+.summary{margin:8px 0 0;}
+.summary dt{
+  font-size:12px;font-weight:700;color:var(--navy-700);
+  margin-top:16px;
+}
+.summary dt:first-child{margin-top:0;}
+.summary dd{
+  margin:4px 0 0;font-size:14.5px;color:var(--ink);
+  padding:10px 14px;background:var(--navy-100);border-radius:6px;
+  white-space:pre-wrap;line-height:1.55;
+}
+
+@media (max-width:560px){
+  .length-cards{grid-template-columns:1fr;}
+  .step{padding:24px 18px;}
+}
+
+/* ============================================================
+   로딩
+   ============================================================ */
+.loading{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:16px;padding:60px 0;color:var(--ink-soft);font-size:14px;
+}
+.spinner{
+  width:34px;height:34px;border-radius:50%;
+  border:3px solid var(--navy-100);
+  border-top-color:var(--navy-800);
+  animation:spin .8s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* ============================================================
+   결과 뷰
+   ============================================================ */
+.result-view{margin-top:8px;}
+.result-toolbar{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:16px;flex-wrap:wrap;gap:10px;
+}
+.badge{
+  display:inline-block;padding:5px 12px;border-radius:999px;
+  background:var(--navy-800);color:#fff;font-size:12px;font-weight:700;
+  letter-spacing:.02em;
+}
+.result-toolbar-right{display:flex;gap:8px;flex-wrap:wrap;}
+
+.copy-toast{
+  text-align:center;color:var(--navy-800);font-size:13px;
+  background:var(--navy-100);border-radius:8px;padding:8px 12px;margin-top:12px;
+}
+
+.result-footer{text-align:center;margin-top:26px;}
+
+/* ---- A4 미리보기 "종이" (3-1 서식 규정 반영) ---- */
+.paper-wrap{
+  overflow-x:auto;
+  padding-bottom:8px;
+}
+.paper{
+  width:210mm;
+  max-width:100%;
+  min-height:120mm;
+  margin:0 auto;
+  background:var(--paper);
+  border:1px solid var(--line);
+  box-shadow:0 6px 24px rgba(19,42,66,.08);
+  padding:15mm 20mm;   /* 위·아래 15mm / 좌·우 20mm */
+  letter-spacing:0;    /* 자간 0 기준 */
+}
+@media (max-width:700px){
+  .paper{padding:9mm 12mm;}
+}
+
+.paper-title{
+  font-family:var(--font-title);
+  font-size:22pt;
+  font-weight:700;
+  color:var(--ink);
+  margin:0 0 6pt;
+  border-bottom:2px solid var(--navy-800);
+  padding-bottom:8pt;
+}
+.paper-lead{
+  font-family:var(--font-note);
+  font-size:14pt;
+  color:var(--ink-soft);
+  margin:0 0 16pt;
+  padding-bottom:10pt;
+  border-bottom:1px solid var(--line);
+  line-height:1.7;
+}
+
+.sec{margin-top:18pt;}
+.sec:first-of-type{margin-top:0;}
+
+.lvl-0{ /* □ 중간목차 */
+  font-family:var(--font-title);
+  font-size:16pt;
+  font-weight:700;
+  color:var(--navy-900);
+  margin:0 0 8pt;
+  display:flex;gap:6pt;
+}
+.lvl-1{ /* ○ 본문, 1칸 들여쓰기 */
+  font-family:var(--font-body);
+  font-size:15pt;
+  line-height:2;             /* 줄간격 200% 내외 */
+  margin:0 0 7pt 1.4em;      /* 문장 사이 7pt */
+  display:flex;gap:6pt;
+}
+.lvl-2{ /* - 세부, 2칸 들여쓰기 */
+  font-family:var(--font-body);
+  font-size:15pt;
+  line-height:2;
+  margin:0 0 7pt 2.8em;
+  display:flex;gap:6pt;
+  color:#2a2f36;
+}
+.lvl-3{ /* · 참고·수치, 3칸 들여쓰기 */
+  font-family:var(--font-note);
+  font-size:13pt;
+  line-height:1.8;
+  margin:0 0 6pt 4.2em;
+  display:flex;gap:6pt;
+  color:var(--ink-soft);
+}
+.marker{flex:none;}
+.txt{outline:none;}
+.txt[contenteditable="true"]{
+  background:#FFF7E8;
+  border-radius:3px;
+  padding:0 2px;
+}
+.needs-figure{color:var(--danger);}
+
+.criteria-tag{
+  display:inline-block;
+  font-family:var(--font-note);
+  font-size:11pt;
+  color:var(--navy-700);
+  background:var(--navy-100);
+  border-radius:4px;
+  padding:1pt 6pt;
+  margin-bottom:4pt;
+}
+
+.effect-table{
+  width:calc(100% - 1.4em);
+  margin-left:1.4em;
+  border-collapse:collapse;
+  font-family:var(--font-note);
+  font-size:12pt;
+}
+.effect-table th,.effect-table td{
+  border:1px solid var(--line);
+  padding:6pt 10pt;
+  text-align:left;
+}
+.effect-table th{
+  background:#E5E5E5;
+  font-weight:700;
+}

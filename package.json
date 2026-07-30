@@ -1,0 +1,9 @@
+{
+  "name": "policy-report-builder",
+  "version": "1.0.0",
+  "private": true,
+  "description": "정책기획보고서 자동 작성 웹서비스 (Netlify 정적 호스팅 + 서버리스 함수)",
+  "engines": {
+    "node": ">=18"
+  }
+}
