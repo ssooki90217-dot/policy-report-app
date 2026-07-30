@@ -91,12 +91,12 @@ exports.handler = async (event) => {
     };
   }
 
-  const apiKey = process.env.ANTHROPIC_API_KEY;
+  const apiKey = process.env.ANTHROPIC_API_REPORT;
   if (!apiKey) {
     return {
       statusCode: 500,
       body: JSON.stringify({
-        error: "서버에 ANTHROPIC_API_KEY 환경변수가 설정되어 있지 않습니다. Netlify 사이트 설정 > Environment variables에서 등록해주세요.",
+        error: "서버에 ANTHROPIC_API_REPORT 환경변수가 설정되어 있지 않습니다. Netlify 사이트 설정 > Environment variables에서 등록해주세요.",
       }),
     };
   }
