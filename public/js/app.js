@@ -222,16 +222,28 @@
       }
     }
 
-    const cleaned = fullText
+const cleaned = fullText
       .trim()
       .replace(/^```json\s*/i, "")
       .replace(/^```\s*/i, "")
       .replace(/```\s*$/i, "");
 
+    // AI가 JSON 앞뒤에 군더더기 문장을 붙이는 경우까지 대비해, 가장 바깥쪽 { ... }만 추출한다.
+    const firstBrace = cleaned.indexOf("{");
+    const lastBrace = cleaned.lastIndexOf("}");
+    const jsonCandidate =
+      firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace
+        ? cleaned.slice(firstBrace, lastBrace + 1)
+        : cleaned;
+
     try {
-      return JSON.parse(cleaned);
+      return JSON.parse(jsonCandidate);
     } catch (e) {
-      throw new Error("모델 응답을 JSON으로 해석하지 못했습니다.");
+      throw new Error(
+        "모델 응답을 JSON으로 해석하지 못했습니다. (응답 끝부분 미리보기: \u201C" +
+          cleaned.slice(-200) +
+          "\u201D)"
+      );
     }
   }
 
