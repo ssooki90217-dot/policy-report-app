@@ -129,7 +129,7 @@ JSON 스키마에 맞춰 정책기획보고서를 작성하라.
       },
       body: JSON.stringify({
         model: MODEL,
-        max_tokens: 2000,
+        max_tokens: 4000,
         system: SYSTEM_PROMPT,
         messages: [{ role: "user", content: userMessage }],
         stream: true,
