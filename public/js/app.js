@@ -141,7 +141,7 @@
   }
 
   /* ============================================================
-     보고서 생성 호출
+     보고서 생성 호출 (스트리밍 응답 처리 — Inactivity Timeout 방지)
      ============================================================ */
   async function generateReport() {
     wizard.hidden = true;
@@ -166,7 +166,7 @@
         throw new Error(`서버 응답 오류 (${res.status}) ${errText}`);
       }
 
-      const data = await res.json();
+      const data = await readAnthropicStream(res);
       state.result = data;
       renderResult(data);
       loadingEl.hidden = true;
@@ -177,8 +177,61 @@
       alert(
         "보고서 생성 중 문제가 발생했습니다.\n" +
           (err && err.message ? err.message : "잠시 후 다시 시도해주세요.") +
-          "\n\n(Netlify 함수의 ANTHROPIC_API_KEY 환경변수가 설정되어 있는지 확인해주세요.)"
+          "\n\n(Netlify 함수의 ANTHROPIC_API_REPORT 환경변수가 설정되어 있는지 확인해주세요.)"
       );
+    }
+  }
+
+  // Anthropic Messages API의 SSE 스트림(content_block_delta)을 읽어 텍스트를 조립하고,
+  // 최종적으로 하나의 JSON 객체로 파싱한다.
+  async function readAnthropicStream(res) {
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = "";
+    let fullText = "";
+
+    while (true) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+
+      let idx;
+      while ((idx = buffer.indexOf("\n\n")) !== -1) {
+        const rawEvent = buffer.slice(0, idx);
+        buffer = buffer.slice(idx + 2);
+
+        let dataStr = "";
+        rawEvent.split("\n").forEach((l) => {
+          if (l.startsWith("data:")) dataStr += l.slice(5).trim();
+        });
+        if (!dataStr) continue;
+
+        let evt;
+        try {
+          evt = JSON.parse(dataStr);
+        } catch (e) {
+          continue;
+        }
+
+        if (evt.type === "content_block_delta" && evt.delta && evt.delta.type === "text_delta") {
+          fullText += evt.delta.text;
+        }
+        if (evt.type === "error") {
+          throw new Error((evt.error && evt.error.message) || "스트림 오류가 발생했습니다.");
+        }
+      }
+    }
+
+    const cleaned = fullText
+      .trim()
+      .replace(/^```json\s*/i, "")
+      .replace(/^```\s*/i, "")
+      .replace(/```\s*$/i, "");
+
+    try {
+      return JSON.parse(cleaned);
+    } catch (e) {
+      throw new Error("모델 응답을 JSON으로 해석하지 못했습니다.");
     }
   }
 
