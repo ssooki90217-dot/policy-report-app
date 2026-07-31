@@ -297,7 +297,7 @@ const cleaned = fullText
     const purposeCombined = [bg.purpose, bg.necessity].filter(Boolean).join(" ");
     appendIfNode(secBg, line(1, "○", purposeCombined ? `(목적·필요성) ${purposeCombined}` : ""));
     appendIfNode(secBg, line(1, "○", bg.current_status ? `(현황) ${bg.current_status}` : ""));
-    appendIfNode(secBg, line(2, "-", bg.problem_cause ? `(문제점) ${bg.problem_cause}` : ""));
+    appendIfNode(secBg, line(1, "○", bg.problem_cause ? `(문제점) ${bg.problem_cause}` : ""));
     appendIfNode(secBg, line(3, "·", bg.cause_analytic ? `분석적 근거: ${bg.cause_analytic}` : ""));
     appendIfNode(secBg, line(3, "·", bg.cause_empathetic ? `공감적 근거: ${bg.cause_empathetic}` : ""));
     paperEl.appendChild(secBg);
