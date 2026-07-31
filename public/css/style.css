@@ -261,8 +261,12 @@ textarea:focus{
 }
 @media (max-width:700px){
   .paper{padding:9mm 12mm;}
+  .paper-title{font-size:18pt;}
+  .lvl-0{font-size:14pt;}
+  .lvl-1,.lvl-2{font-size:12.5pt;line-height:1.75;margin-left:1em !important;}
+  .lvl-2{margin-left:2em !important;}
+  .lvl-3{font-size:11pt;margin-left:3em !important;}
 }
-
 .paper-title{
   font-family:var(--font-title);
   font-size:22pt;
